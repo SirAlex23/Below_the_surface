@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MÓDULO 04 | Mole AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link rel="stylesheet" href="ia.css" />
+  </head>
+  <body>
+    <header id="main-nav-bar">
+      <nav>
+        <a href="main.html" class="nav-link">ACCESO Y BIENVENIDA</a>
+        <a href="internet.html" class="nav-link">INTERNET PROFUNDO</a>
+        <a href="privacidad.html" class="nav-link">EL COSTO DE LA SUPERFICIE</a>
+        <a href="cripto.html" class="nav-link">LA CRIPTO-REVOLUCIÓN</a>
+        <a href="#" class="nav-link current-section">MOLE AI</a>
+      </nav>
+    </header>
+
+    <main id="content-container">
+      <section class="content-module">
+        <header>
+          <h1 class="section-title">
+            | MÓDULO 04 | MOLE AI: EVALUACIÓN Y CONSEJOS
+          </h1>
+        </header>
+
+        <div class="mole-logo-container">
+          <video autoplay loop muted playsinline src="Mole.mp4"></video>
+        </div>
+
+        <div id="chat-window">
+          <div class="mole-message">
+            <span style="color: var(--hacker-green)"
+              >> INICIANDO COMUNICACIÓN CON MOLE AI...</span
+            ><br />
+            <span style="color: var(--system-color)"
+              >> Hola, Soy Mole AI, tu analista de seguridad de
+              confianza.Responde a 3 sencillas preguntas y evaluaré tu nivel de
+              seguridad, ademas resolveré cualquier duda que tengas. ¿Empezamos?
+            </span>
+          </div>
+        </div>
+
+        <div id="chat-input-area">
+          <input
+            type="text"
+            id="user-input"
+            placeholder="Escribe tu pregunta o 'continuar'..."
+            disabled
+          />
+          <button id="send-button" disabled>ENVIAR</button>
+        </div>
+      </section>
+    </main>
+    <script src="mole_scripts.js" defer></script>
+  </body>
+</html>

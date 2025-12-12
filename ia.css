@@ -1,0 +1,149 @@
+/* --- Variables heredadas de style.css (Ajustadas para el Módulo AI) --- */
+:root {
+  --main-text-color: #e0e0e0; /* Blanco/Gris claro (Texto General) */
+  --title-color: #ffff00; /* ¡AMARILLO! (Título Principal) */
+  --accent-color: #00ff41; /* Verde Consola (Subtítulos, bordes, línea del título) */
+  --system-color: #00ffff; /* Cian (Mensajes de Mole / Sistema) */
+  --hacker-green: #00ff41; /* Verde Consola */
+}
+
+/* --- 1. Estilos Específicos de Fondo --- */
+body {
+  background-image: url("IA.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* --- 2. Contenedor de Módulo (El Panel de Contenido) --- */
+.content-module {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 2px solid var(--hacker-green); /* En Verde */
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.5); /* En Verde */
+}
+
+/* --- 3. Encabezado y Título --- */
+.section-title {
+  font-size: 1.8rem;
+  color: #ff3333;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  /* La línea debe ser Verde Consola */
+  border-bottom: 2px solid var(--hacker-green);
+}
+
+/* Contenedor del logo animado */
+.mole-logo-container {
+  text-align: center;
+  margin: 20px 0 40px;
+}
+
+.mole-logo-container video {
+  width: 150px;
+  height: auto;
+  border: 1px solid var(--hacker-green);
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--hacker-green);
+}
+
+/* --- 4. Ventana de Chat (Terminal) --- */
+#chat-window {
+  height: 400px; /* Altura fija para la ventana de conversación */
+  overflow-y: scroll; /* Permite desplazamiento */
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 1px solid var(--hacker-green);
+  margin-bottom: 20px;
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Estilo para los mensajes de la IA (MOLE) */
+.mole-message {
+  color: var(--system-color); /* Cian/Azul */
+  margin-bottom: 15px;
+}
+
+/* Estilo para las opciones o preguntas (Destacado en Amarillo) */
+.mole-question {
+  color: #aaaaaa;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Estilo para la lista de preguntas/opciones */
+.options-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0;
+}
+
+.options-list li {
+  padding: 5px 0;
+  cursor: pointer;
+  transition: color 0.2s;
+  color: var(--hacker-green); /* Las opciones son interactivas (Verde) */
+}
+
+.options-list li:hover {
+  color: var(--system-color); /* Cian al pasar el ratón */
+}
+
+/* --- 5. Área de Input del Usuario --- */
+#chat-input-area {
+  display: flex;
+  gap: 10px;
+}
+
+#user-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid var(--hacker-green);
+  background-color: #1a1a1a;
+  color: var(--hacker-green);
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  outline: none;
+}
+
+#send-button {
+  padding: 10px 20px;
+  background-color: var(--hacker-green);
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-stack);
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+#send-button:hover {
+  background-color: var(--system-color); /* Cian al pasar el ratón */
+  color: black;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 768px) {
+  .content-module {
+    padding: 15px;
+    margin: 15px auto;
+  }
+  #chat-window {
+    height: 300px;
+  }
+  .section-title {
+    font-size: 1.6rem;
+  }
+  .mole-logo-container video {
+    width: 120px;
+  }
+}
+
+.user-message {
+  margin-bottom: 25px;
+}

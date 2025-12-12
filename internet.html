@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MÓDULO 01 | Internet Profundo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main_style.css" />
+    <link rel="stylesheet" href="internet.css" />
+  </head>
+  <body>
+    <header id="main-nav-bar">
+      <nav>
+        <a href="main.html" class="nav-link">ACCESO Y BIENVENIDA</a>
+        <a href="#" class="nav-link current-section">INTERNET PROFUNDO</a>
+        <a href="privacidad.html" class="nav-link">EL COSTO DE LA SUPERFICIE</a>
+        <a href="cripto.html" class="nav-link">LA CRIPTO-REVOLUCIÓN</a>
+        <a href="ia.html" class="nav-link">MOLE AI</a>
+      </nav>
+    </header>
+
+    <main id="main-content-container">
+      <section id="darkweb" class="content-section">
+        <div class="hacker-box content-module">
+          <h2 class="section-title">// MÓDULO 01: EL MANTO DE LA OSCURIDAD</h2>
+
+          <p class="console-text">
+            <span class="system-message"
+              >> INICIANDO ESCANEO DE DATOS EN CAPA 3...</span
+            >
+          </p>
+
+          <article class="data-dump">
+            <h3 class="data-title">
+              | 01.01 | EL MANTO DE LA RED Y EL ESPECTRO DEL CONTENIDO
+            </h3>
+            <p>
+              El ecosistema de Internet se divide en capas por su accesibilidad.
+              La Web Superficial (Surface Web) es lo que indexan los motores de
+              búsqueda (Google, Bing). Por debajo se encuentra la Web Profunda
+              (Deep Web), que constituye el 90-95% de todo el Internet (bases de
+              datos bancarias, registros académicos, archivos médicos).
+            </p>
+            <p>
+              La Dark Web es solo una pequeña fracción, intencionalmente oculta,
+              de la Deep Web. La confusión popular radica en que ambas no están
+              indexadas, pero la Dark Web requiere software específico (como
+              Tor) porque utiliza redes de anonimato para asegurar que ni la
+              fuente ni el destino de la comunicación puedan ser rastreados. Su
+              contenido es dual: abarca desde bibliotecas de datos censurados y
+              buzones seguros para denunciantes, hasta el comercio de bienes
+              ilícitos, datos robados y material sensible. La clave de su
+              funcionamiento son los pseudo-dominios ".onion", accesibles solo a
+              través de redes cifradas.
+            </p>
+
+            <figure class="content-image-separator">
+              <img
+                src="Dark.jpg"
+                alt="Representación de la Deep Web o Dark Web, contenido oculto."
+              />
+              <figcaption>
+                // Radiografía del funcionamiento de la Dark Web.
+              </figcaption>
+            </figure>
+
+            <h3 class="data-title">
+              | 01.02 | NAVEGACIÓN ANÓNIMA: TOR Y ALTERNATIVAS
+            </h3>
+            <p>
+              Tor (The Onion Router) es la herramienta fundamental de anonimato.
+              Fue desarrollado inicialmente por el Laboratorio de Investigación
+              Naval de los EE.UU a mediados de los años 90 para proteger las
+              comunicaciones de inteligencia. Hoy, es mantenido por la Tor
+              Project, una organización sin fines de lucro. La seguridad de Tor
+              reside en el "Cifrado por Capas". La información se cifra tres
+              veces y se envía a través de una cadena aleatoria de tres nodos
+              (servidores) distribuidos globalmente. Cada nodo solo puede
+              descifrar una capa para conocer la dirección del siguiente salto,
+              nunca el mensaje completo ni la dirección IP final del usuario.
+            </p>
+            <p>
+              La misión de Tor Project es promover los derechos humanos y las
+              libertades mediante la creación y despliegue de tecnologías de
+              anonimato y privacidad. Reivindica el derecho universal a la
+              privacidad y la navegación libre de vigilancia y censura. Existen
+              otras redes, como **I2P (Invisible Internet Project)**, que buscan
+              una red más privada y distribuida entre pares. Para acceder de
+              forma segura a la Dark Web (si es estrictamente necesario), se
+              recomienda un sistema operativo independiente (como Tails OS) y
+              una VPN previa a la conexión de Tor.
+              <span class="warning-text"
+                >**Advertencia**: No se recomienda acceder por simple curiosidad
+                debido a los riesgos de malware y contenido sensible.</span
+              >
+            </p>
+
+            <figure class="content-image-separator">
+              <img
+                src="Tor.jpg"
+                alt="Icono o diagrama de la red Tor (The Onion Router)"
+              />
+              <figcaption>
+                // Red de anonimato esencial para acceder al punto .onion.
+              </figcaption>
+            </figure>
+
+            <h3 class="data-title">
+              | 01.03 | AGENCIAS, VIGILANCIA Y DESARTICULACIÓN
+            </h3>
+            <p>
+              La Dark Web no es un territorio sin ley. Organizaciones como el
+              FBI, la CIA y Europol mantienen operaciones activas de vigilancia
+              y desarticulación. Su operativa se centra en la infiltración,
+              creando nodos de salida maliciosos o estableciendo sitios web
+              falsos (honeypots) para atrapar a los usuarios. También invierten
+              en la explotación de errores de programación o en la
+              identificación del usuario en el mundo real a través de errores
+              logísticos.
+            </p>
+            <p class="hacker-note">
+              Ejemplo de Desarticulación: Uno de los casos más notorios es la
+              clausura de "Silk Road". Este fue el mercado negro más grande de
+              la Dark Web, dedicado principalmente a la venta de drogas ilícitas
+              mediante criptomonedas (Bitcoin). Fue desarticulado por el FBI en
+              2013, demostrando que el ecosistema anónimo no es invulnerable. La
+              clave fue un error de Ross Ulbricht (su creador, Dread Pirate
+              Roberts) al usar una dirección de correo electrónico personal y
+              fallos de configuración del servidor que permitieron la
+              identificación de su ubicación física.
+            </p>
+
+            <figure class="content-image-separator">
+              <img
+                src="Agencia.jpg"
+                alt="Representación de vigilancia de agencias de seguridad"
+              />
+              <figcaption>
+                // Operaciones encubiertas en la capa oculta de la red.
+              </figcaption>
+            </figure>
+          </article>
+
+          <h3 class="data-title">
+            | 01.04 | ¿ES UN PELIGRO LA DARK WEB? DUALIDAD Y NECESIDAD
+          </h3>
+          <p>
+            La Dark Web es un arma de doble filo. Si bien presenta riesgos
+            significativos, su existencia se justifica por la necesidad de
+            preservar la libertad de comunicación y el acceso a la información
+            en un entorno digital cada vez más vigilado.
+          </p>
+          <ul class="data-list">
+            <li>
+              Beneficios y Necesidad: Es crucial para la libertad de expresión.
+              Permite a periodistas investigar sin revelar sus fuentes, a
+              activistas organizarse en regímenes represivos y a ciudadanos
+              acceder a información censurada (como Wikipedia o noticias
+              internacionales). Sin ella, la vigilancia total sería mucho más
+              fácil de imponer globalmente.
+            </li>
+            <li>
+              Peligros y Desventajas: El riesgo principal es la exposición a
+              malware avanzado y sitios de estafa diseñados para robar
+              identidades. Además, existe la exposición a contenido altamente
+              ilegal (como la explotación o el cibercrimen organizado) que debe
+              ser evitado por completo.
+            </li>
+          </ul>
+
+          <figure class="content-image-separator">
+            <img
+              src="Dual.jpg"
+              alt="Representación de la dualidad de la Dark Web (Libertad vs. Crimen)"
+            />
+            <figcaption>
+              // Analizando los beneficios vs. los peligros inherentes al
+              anonimato total.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

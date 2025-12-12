@@ -1,0 +1,219 @@
+/* --- Variables --- */
+:root {
+  --bg-color: #0a0a0a;
+  --text-color: #00ff41;
+  --accent-color: #ff0000;
+  --font-stack: "Share Tech Mono", "Fira Code", monospace;
+}
+
+/* --- Estilos Globales y Fondo Dinámico --- */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-stack);
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* El contenedor de las partículas estará detrás de todo */
+#matrixCanvas {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -2; /* Detrás del contenido */
+}
+
+/* --- Secciones de Scroll --- */
+.scroll-section {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* Estado inicial: oculto y desplazado */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Estado visible: se activa con JS */
+.scroll-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.content-box {
+  text-align: center;
+  max-width: 90%; /* Asegura que no se corte en pantallas pequeñas */
+  margin: 0 auto;
+}
+
+h1,
+h2 {
+  /* Permitir que el texto salte de línea si es necesario */
+  white-space: normal;
+  word-wrap: break-word;
+}
+h1 {
+  font-size: 2.3rem;
+}
+h2 {
+  font-size: 2.3rem;
+}
+
+/* --- Efecto de Tipeo y Cursor Parpadeante --- */
+
+/* El texto empieza oculto */
+.typing-effect {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap; /* Se mantiene en una línea mientras se escribe */
+  width: 0; /* Ancho inicial 0 */
+}
+
+/* Animación de escritura */
+.typing-effect.typing {
+  animation: typing 2.5s steps(60, end) forwards;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Cursor parpadeante independiente */
+.blinking-cursor {
+  display: inline-block;
+  font-weight: bold;
+  color: var(--text-color);
+  animation: blink 1s step-end infinite;
+  margin-left: 5px;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- Sección Final: Glitch Suave --- */
+.final-section h1 {
+  font-size: 3rem;
+  color: #fff; /* Blanco base */
+  text-shadow: 2px 2px var(--accent-color); /* Sombra cian sutil */
+  position: relative;
+  display: inline-block;
+}
+
+/* Efecto Glitch Estático (distorsión sin cambio de color brusco) */
+.glitch-text-static::before,
+.glitch-text-static::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  opacity: 0.8;
+}
+/* Capa 1 del glitch (desplazamiento ligero) */
+.glitch-text-static::before {
+  left: 2px;
+  text-shadow: -1px 0 var(--text-color); /* Sombra verde sutil */
+  clip: rect(24px, 550px, 90px, 0);
+  /*animation: glitch-anim-soft 3s infinite linear alternate-reverse;*/
+  animation: glitch-anim-break 2s infinite linear alternate-reverse;
+}
+/* Capa 2 del glitch (desplazamiento opuesto) */
+.glitch-text-static::after {
+  left: -2px;
+  text-shadow: -1px 0 var(--accent-color); /* Sombra cian sutil */
+  clip: rect(85px, 550px, 140px, 0);
+  /* animation: glitch-anim-soft 2s infinite linear alternate-reverse;*/
+  animation: glitch-anim-break 1.5s infinite linear alternate;
+}
+
+@keyframes glitch-anim-break {
+  /* Aquí van múltiples keyframes donde la propiedad 'clip' cambia 
+       sus valores para mover la rotura a lo largo del texto */
+  0% {
+    clip: rect(10px, 9999px, 31px, 0);
+    transform: translateX(1px);
+  }
+  10% {
+    clip: rect(70px, 9999px, 25px, 0);
+    transform: translateX(-1px);
+  }
+  /* ... y más pasos para la rotura ... */
+  100% {
+    clip: rect(33px, 9999px, 99px, 0);
+    transform: translateX(-1px);
+  }
+}
+
+/* --- Botón Hacker (Sin cambios) --- */
+.hacker-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  margin-top: 30px;
+  background: transparent;
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.hacker-btn:hover {
+  background: var(--text-color);
+  color: var(--bg-color);
+  box-shadow: 0 0 20px var(--text-color);
+}
+
+/* --- Responsividad --- */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .final-section h1 {
+    font-size: 2rem;
+  }
+
+  /* En móvil, permitimos el salto de línea desde el principio */
+  .typing-effect {
+    white-space: normal;
+    width: auto;
+  }
+  /* Animación más simple para móvil: aparición gradual */
+  .typing-effect.typing {
+    animation: fade-in 1s ease-out forwards;
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}

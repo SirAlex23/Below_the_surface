@@ -1,0 +1,199 @@
+/* Variables y estilos de navegación se asumen definidos en style.css y main_style.css */
+
+/* 1. Fondo de la Página (Fondo2.jpg) */
+body {
+  background-image: url("Fondo2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 2. Estilos de Diseño de Módulo */
+#main-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.content-section {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content-module {
+  width: 90%;
+  max-width: 800px;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 1px solid var(--text-color);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+  margin: 40px 0;
+}
+
+/* 3. Estilos de Terminal y Consola */
+.console-text {
+  font-family: var(--font-stack);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--text-color);
+}
+
+/* 4. Estilos de Títulos y Cuerpo de Texto */
+.section-title {
+  font-family: var(--font-stack);
+  font-size: 1.8rem;
+  color: #ff3333; /* Rojo */
+  border-bottom: 2px solid #ff3333;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.data-title {
+  font-family: var(--font-stack);
+  font-size: 1.3rem;
+  color: #ffff00; /* Amarillo */
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.data-dump p {
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #e0e0e0; /* Gris claro */
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Clase para el ejemplo de Silk Road */
+.hacker-note {
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #00ffff; /* Cian para notas importantes */
+  border-left: 3px solid #00ffff;
+  padding-left: 15px;
+  margin: 25px 0;
+}
+
+/* 5. Estilos de Listas y Advertencias */
+.data-list {
+  color: #e0e0e0;
+  list-style-type: none;
+  padding-left: 20px;
+}
+.data-list li {
+  margin-bottom: 10px;
+  position: relative;
+  font-family: var(--font-stack);
+}
+.data-list li::before {
+  content: ">>";
+  color: var(--text-color);
+  font-weight: bold;
+  margin-right: 10px;
+}
+.system-message {
+  color: #00ffff;
+  font-weight: bold;
+}
+.warning-text {
+  color: #ff3333;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 51, 51, 0.7);
+}
+.end-message {
+  text-align: center;
+  padding-top: 20px;
+  color: #00ffff;
+}
+
+/* 6. ESTILOS DE IMÁGENES (Separador) */
+figure {
+  /* Estilo del marco general de la imagen */
+  margin: 30px auto;
+  padding: 10px;
+  border: 1px solid rgba(0, 255, 65, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  /* CAMBIO CLAVE: Reducción del tamaño máximo para que no sean invasivas */
+  max-width: 500px;
+  clear: both;
+  text-align: center;
+}
+
+.content-image-separator {
+  /* Asegura el límite de tamaño y el centrado */
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+figcaption {
+  font-family: var(--font-stack);
+  font-size: 0.85rem;
+  color: #00ffff;
+  padding-top: 5px;
+  text-align: center;
+}
+
+/* --- 7. Responsividad para Dispositivos Móviles (Menos de 600px) --- */
+@media (max-width: 600px) {
+  /* Reducir el padding de la franja superior */
+  #main-nav-bar {
+    padding: 5px 0;
+  }
+
+  /* Reducir el tamaño de los enlaces de navegación */
+  .nav-link {
+    font-size: 0.75rem;
+    padding: 8px 10px;
+  }
+
+  /* Reducir el tamaño de la caja de contenido y los márgenes */
+  .content-module {
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  /* Reducir tamaño de títulos principales */
+  .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  /* Reducir tamaño de subtítulos */
+  .data-title {
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+
+  /* Reducir tamaño del texto del cuerpo */
+  .data-dump p,
+  .console-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Ajustar las imágenes para que ocupen todo el ancho disponible en móvil */
+  figure,
+  .content-image-separator {
+    max-width: 95%; /* Permitir que ocupe casi todo el ancho del módulo */
+    margin: 20px auto;
+    padding: 5px;
+  }
+}

@@ -1,0 +1,184 @@
+/* --- Estilos para privacidad.css (MÓDULO PRIVACIDAD) --- */
+
+/* 1. Fondo de la Página (Palo.jpg) */
+body {
+  background-image: url("Palo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 2. Estilos de Diseño de Módulo (Reutilizamos la estructura del módulo Dark Web) */
+#main-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.content-section {
+  padding: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content-module {
+  width: 90%;
+  max-width: 800px;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro semi-transparente */
+  border: 1px solid var(--text-color); /* Borde verde */
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+  margin: 40px 0;
+}
+
+/* 3. Estilos de Terminal, Títulos y Texto (Colores y Fuentes) */
+.section-title {
+  font-family: var(--font-stack);
+  font-size: 1.8rem;
+  color: #ff3333; /* Rojo para el título principal */
+  border-bottom: 2px solid #ff3333;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.data-title {
+  font-family: var(--font-stack);
+  font-size: 1.3rem;
+  color: #ffff00; /* Amarillo para subtítulos */
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.data-dump p {
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #e0e0e0; /* Gris claro para el cuerpo de texto */
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.console-text {
+  font-family: var(--font-stack);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.system-message {
+  color: #00ffff; /* Cian para mensajes de sistema */
+  font-weight: bold;
+}
+
+/* Estilo para la nota sobre Google Chrome */
+.hacker-note {
+  font-family: var(--font-stack);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #00ffff;
+  border-left: 3px solid #00ffff;
+  padding-left: 15px;
+  margin: 25px 0;
+}
+
+/* 4. Estilos de Listas (Viñetas >>) */
+.data-list {
+  list-style-type: none;
+  padding-left: 20px;
+}
+.data-list li {
+  margin-bottom: 10px;
+  font-family: var(--font-stack);
+  color: #e0e0e0;
+}
+.data-list li::before {
+  content: ">>";
+  color: var(--text-color); /* Verde */
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* 5. Estilos de Imágenes (Separador - 500px) */
+figure {
+  margin: 30px auto;
+  padding: 10px;
+  border: 1px solid rgba(0, 255, 65, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  max-width: 500px; /* Limite de tamaño */
+  clear: both;
+  text-align: center;
+}
+
+.content-image-separator {
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+figcaption {
+  font-family: var(--font-stack);
+  font-size: 0.85rem;
+  color: #00ffff;
+  padding-top: 5px;
+  text-align: center;
+}
+
+/* --- 6. Responsividad para Dispositivos Móviles (Menos de 600px) --- */
+@media (max-width: 600px) {
+  /* Reducir el padding de la franja superior */
+  #main-nav-bar {
+    padding: 5px 0;
+  }
+
+  /* Reducir el tamaño de los enlaces de navegación */
+  .nav-link {
+    font-size: 0.75rem;
+    padding: 8px 10px;
+  }
+
+  /* Reducir el tamaño de la caja de contenido y los márgenes */
+  .content-module {
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  /* Reducir tamaño de títulos principales */
+  .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  /* Reducir tamaño de subtítulos */
+  .data-title {
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+
+  /* Reducir tamaño del texto del cuerpo */
+  .data-dump p,
+  .console-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Ajustar las imágenes para que ocupen todo el ancho disponible en móvil */
+  figure,
+  .content-image-separator {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 5px;
+  }
+}
