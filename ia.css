@@ -130,7 +130,7 @@ body {
 /* --- Responsividad --- */
 @media (max-width: 768px) {
   #main-nav-bar {
-    padding: 5px 0;
+    padding: 15px 0;
   }
 
   .content-module {

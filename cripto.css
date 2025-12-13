@@ -116,7 +116,7 @@ figcaption {
 /* --- 6. Responsividad para Dispositivos Móviles --- */
 @media (max-width: 600px) {
   #main-nav-bar {
-    padding: 5px 0;
+    padding: 15px 0;
   }
 
   .content-module {
