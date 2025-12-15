@@ -199,13 +199,12 @@ h2 {
     font-size: 2rem;
   }
 
-  /* En móvil, permitimos el salto de línea desde el principio */
+  /* 
   .typing-effect {
     white-space: normal;
     width: auto;
   }
-  /* Animación más simple para móvil: aparición gradual */
-  .typing-effect.typing {
+  
     animation: fade-in 1s ease-out forwards;
   }
   @keyframes fade-in {
@@ -215,5 +214,5 @@ h2 {
     to {
       opacity: 1;
     }
-  }
+  }*/
 }
