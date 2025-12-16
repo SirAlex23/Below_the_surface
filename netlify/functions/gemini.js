@@ -1,15 +1,16 @@
-// netlify/gemini.js
-
+// 1. IMPORTACIÓN CORREGIDA: 'const' debe ser en minúsculas
 const { GoogleGenAI } = require("@google/genai");
 
-// La clave se lee de la variable de entorno de Netlify (GEMINI_API_KEY)
+// 2. INICIALIZACIÓN CORREGIDA: Se inicializa sin argumentos,
+// y la librería busca automáticamente la clave en process.env.GEMINI_API_KEY
+// (que es la variable de entorno que configuraste en Netlify)
 const ai = new GoogleGenAI({});
 
 const modelName = "gemini-2.5-flash";
 
 // Instrucciones detalladas para que Mole se comporte como un experto
 const systemInstruction =
-  "Eres Mole AI, un analista de ciberseguridad, tecnología,y  soberanía digital.Dominas todos los conocimientos del internet profundo y defiendes un internet libre. Tu objetivo es responder todas las preguntas del usuario con un tono experto, conciso, y sin usar formatos como markdown (*, #). Limita tus respuestas a un par de párrafos y enfócate en dar consejos prácticos y fiables, especialmente sobre VPNs, 2FA,Navegadores privados, Deep Web ,Dark Web, Monedas virtuales, y amenazas de IA y mucho mas. ";
+  "Eres Mole AI, un analista de ciberseguridad, tecnología,y soberanía digital.Dominas todos los conocimientos del internet profundo y defiendes un internet libre. Tu objetivo es responder todas las preguntas del usuario con un tono experto, conciso, y sin usar formatos como markdown (*, #). Limita tus respuestas a un par de párrafos y enfócate en dar consejos prácticos y fiables, especialmente sobre VPNs, 2FA,Navegadores privados, Deep Web ,Dark Web, Monedas virtuales, y amenazas de IA y mucho mas. ";
 
 exports.handler = async (event, context) => {
   // Solo acepta peticiones POST del frontend
@@ -46,11 +47,17 @@ exports.handler = async (event, context) => {
       }),
     };
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    // Manejo de errores mejorado
+    console.error("Gemini API Error:", error.message);
     return {
       statusCode: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        error: "Error interno al comunicarse con la IA.",
+        error:
+          "Error CRÍTICO: No se pudo obtener respuesta de la IA. (Revise logs en Netlify para detalles).",
+        details: error.message, // Opcional, para debug en el frontend si es necesario
       }),
     };
   }
