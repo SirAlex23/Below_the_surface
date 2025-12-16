@@ -66,6 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const section = entry.target;
       const typingText = section.querySelector(".typing-effect");
 
+      // Esto asegura que la clase 'typing-finished' se quite al resetear la sección
+      if (typingText) {
+        typingText.classList.remove("typing-finished");
+      }
+
       if (entry.isIntersecting) {
         // --- ENTRADA: Activar animación ---
         section.classList.add("visible");
@@ -90,5 +95,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   scrollSections.forEach((section) => {
     observer.observe(section);
+  });
+
+  // =======================================================
+  // --- 3. LÓGICA DE CORRECCIÓN PARA CORTE DE TEXTO EN MÓVIL ---
+  // Añade la clase 'typing-finished' cuando la animación CSS termina.
+  // Esto permite que el texto salte de línea y no se corte.
+  // =======================================================
+  const allTypingElements = document.querySelectorAll(".typing-effect");
+
+  allTypingElements.forEach((element) => {
+    element.addEventListener("animationend", (event) => {
+      // Solo actuamos si la animación que terminó es la de 'typing'
+      if (event.animationName === "typing") {
+        element.classList.add("typing-finished");
+      }
+    });
   });
 });

@@ -199,6 +199,9 @@ h2 {
     font-size: 2rem;
   }
 
+  .typing-finished {
+    white-space: normal;
+  }
   /* 
   .typing-effect {
     white-space: normal;
