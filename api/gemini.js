@@ -5,9 +5,10 @@ export default async function handler(req, res) {
 
   const { prompt } = req.body;
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
 
-  // Configuración del sistema de reintento
+  // Usamos el modelo que ya sabemos que te funciona
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
   const MAX_RETRIES = 3;
   let lastError;
 
@@ -16,31 +17,29 @@ export default async function handler(req, res) {
       const result = await model.generateContent({
         contents: [{ role: "user", parts: [{ text: prompt }] }],
         systemInstruction:
-          "Eres Mole AI, un experto en ciberseguridad, tecnología soberanía digital, navegadores privados, Dark Web y Deep web, monedas virtuales,y seguridad personal. Responde de forma experta, concisa y sin usar formatos markdown como asteriscos o almohadillas",
+          "Eres Mole AI, un analista de ciberseguridad, soberanía digital Dark web y Deep web, VPN, navegadores privados, monedas virtuales y seguridad digital. Responde de forma experta, concisa y sin usar formatos markdown (*, #). Limita tus respuestas a un par de párrafos.",
       });
 
       const response = await result.response;
-      // Si llegamos aquí, la respuesta fue exitosa
       return res.status(200).json({ response: response.text() });
     } catch (error) {
       lastError = error;
-      // Si el error es sobrecarga (503), esperamos y reintentamos
+      // Si el error es 503 (sobrecarga) o 429 (límite de cuota), esperamos y reintentamos
       if (
         error.message.includes("503") ||
-        error.message.includes("overloaded")
+        error.message.includes("overloaded") ||
+        error.message.includes("429")
       ) {
-        console.log(`Intento ${i + 1} fallido por sobrecarga. Reintentando...`);
-        await new Promise((resolve) => setTimeout(resolve, 1500)); // Espera 1.5 segundos
+        console.log(`Intento ${i + 1} fallido. Reintentando en 2 segundos...`);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         continue;
       }
-      // Si es otro tipo de error, paramos el bucle
       break;
     }
   }
 
-  // Si después de los reintentos sigue fallando
   return res.status(500).json({
-    error: "Mole AI está muy solicitado ahora mismo.",
+    error: "Mole AI está bajo mucha presión ahora mismo.",
     details: lastError.message,
   });
 }
