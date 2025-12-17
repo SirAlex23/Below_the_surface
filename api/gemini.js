@@ -1,45 +1,32 @@
-// 1. Importación correcta de la librería de Google
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// 2. Configuración de Mole AI
-const modelName = "models/gemini-pro"; // El modelo 2.5 no existe aún, usamos 1.5 que es el más actual y rápido
-const systemInstruction =
-  "Eres Mole AI, un analista de ciberseguridad, tecnología,y soberanía digital. Dominas todos los conocimientos del internet profundo y defiendes un internet libre. Tu objetivo es responder todas las preguntas del usuario con un tono experto, conciso, y sin usar formatos como markdown (*, #). Limita tus respuestas a un par de párrafos y enfócate en dar consejos prácticos y fiables.";
-
-// 3. FUNCIÓN PARA VERCEL (Export Default)
 export default async function handler(req, res) {
-  // Solo acepta peticiones POST
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
-  }
+  if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
   try {
     const { prompt } = req.body;
 
-    if (!prompt) {
-      return res.status(400).json({ error: "Falta el prompt" });
-    }
-
-    // Inicializamos la IA con la clave que pusiste en Vercel
+    // Inicializamos con la clave de Vercel
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+    // USAMOS EL NOMBRE COMPLETO Y EL MODELO MÁS COMPATIBLE
     const model = genAI.getGenerativeModel({
-      model: modelName,
-      systemInstruction: systemInstruction,
+      model: "gemini-1.5-flash", // Sin prefijos raros, solo el nombre base
     });
 
-    const result = await model.generateContent(prompt);
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      systemInstruction:
+        "Eres Mole AI, un experto en ciberseguridad, tecnologia digital, VPN,navegadores privados, moneda virtual, dark web y deep web y basicamente todo. Responde de forma concisa y sin markdown.",
+    });
+
     const response = await result.response;
-    const text = response.text();
-
-    // Enviamos la respuesta en el formato que espera tu frontend
-    return res.status(200).json({
-      response: text.trim(),
-    });
+    return res.status(200).json({ response: response.text() });
   } catch (error) {
-    console.error("Error en Mole AI:", error.message);
-    return res.status(500).json({
-      error: "Error CRÍTICO en el servidor de la IA.",
-      details: error.message,
-    });
+    // ESTO NOS DIRÁ EN LOS LOGS QUÉ MODELOS TIENES DISPONIBLES REALMENTE
+    console.error("DETALLE DEL ERROR:", error.message);
+    return res
+      .status(500)
+      .json({ error: "Error de configuración de IA", details: error.message });
   }
 }
