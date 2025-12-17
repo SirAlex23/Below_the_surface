@@ -1,13 +1,8 @@
 {
-  "functions": {
-    "netlify/functions/**": {
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
     {
       "source": "/.netlify/functions/:path*",
-      "destination": "/netlify/functions/:path*"
+      "destination": "/api/:path*"
     }
   ]
 }
