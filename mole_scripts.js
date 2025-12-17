@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Intentamos capturar los IDs tanto de la versión vieja como de la nueva para que no falle
   const chatWindow =
     document.getElementById("chat-container") ||
     document.getElementById("chat-window");
@@ -41,24 +42,25 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // --- FUNCIONES DE UI ---
+  // Aseguramos que el input esté habilitado al cargar
+  if (userInput) {
+    userInput.disabled = false;
+    userInput.focus();
+  }
 
   function appendMessage(sender, text) {
     const messageDiv = document.createElement("div");
     messageDiv.className =
       sender === "mole" ? "mensaje-mole" : "mensaje-usuario";
-
-    // Estética Hacker Original
     const prefix = sender === "mole" ? "> MOLE >> " : "> USUARIO >> ";
-    messageDiv.textContent = prefix + text;
 
+    messageDiv.textContent = prefix + text;
     chatWindow.appendChild(messageDiv);
 
     const esMovil = window.innerWidth <= 768;
     if (esMovil || sender === "user") {
       messageDiv.scrollIntoView({ behavior: "smooth", block: "end" });
     } else {
-      // Efecto typeo solo en PC para Mole
       const originalText = messageDiv.textContent;
       messageDiv.textContent = "";
       let i = 0;
@@ -75,16 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return messageDiv;
   }
 
-  // --- LÓGICA DEL TEST ---
-
   function displayQuestion(question) {
     const questionDiv = document.createElement("div");
     questionDiv.className = "mensaje-mole mole-question-container";
 
-    let html = `<span class="mole-question">${question.text}</span><br><ul class="options-list">`;
+    let html = `<span class="mole-question">${question.text}</span><br><ul class="options-list" style="padding-left:0; list-style:none;">`;
     question.options.forEach((option, index) => {
       const letter = String.fromCharCode(65 + index);
-      html += `<li data-points="${option.points}" data-letter="${letter}" style="cursor:pointer; list-style:none; padding:5px 0; color:var(--hacker-green);">${option.text}</li>`;
+      html += `<li data-points="${option.points}" data-letter="${letter}" style="cursor:pointer; margin:10px 0; color:var(--hacker-green); border:1px solid #00ff4133; padding:5px;">${option.text}</li>`;
     });
     html += "</ul>";
 
@@ -105,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     score += points;
     currentQuestionIndex++;
-
     appendMessage("user", `[${letter}] ${text}`);
 
     if (currentQuestionIndex < securityQuestions.length) {
@@ -127,17 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
         : "BAJO (Acceso Abierto)";
     appendMessage(
       "mole",
-      `ANÁLISIS COMPLETADO. Puntuación: ${score}/9. Nivel: ${level}.`
+      `ANÁLISIS COMPLETADO. Puntuación: ${score}/9. Tu Nivel de Protección: ${level}.`
     );
-    appendMessage(
-      "mole",
-      "Vuelvo a modo consulta. ¿En qué más puedo ayudarte?"
-    );
+    appendMessage("mole", "Vuelvo a modo consulta. Pregunta lo que desees.");
     conversationState = "dialogue";
-    userInput.placeholder = "Escribe tu pregunta o 'TEST'...";
   }
-
-  // --- COMUNICACIÓN CON API VERCEL ---
 
   async function callGemini(query) {
     const loading = appendMessage("mole", "Analizando...");
@@ -148,11 +141,14 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ prompt: query }),
       });
       const data = await response.json();
-      chatWindow.removeChild(loading);
-      appendMessage("mole", data.response || "Error en respuesta");
+      if (chatWindow.contains(loading)) chatWindow.removeChild(loading);
+      appendMessage(
+        "mole",
+        data.response || "No recibí respuesta inteligible."
+      );
     } catch (e) {
       if (chatWindow.contains(loading)) chatWindow.removeChild(loading);
-      appendMessage("mole", "Error crítico de conexión.");
+      appendMessage("mole", "Error de conexión con la IA central.");
     }
   }
 
@@ -166,25 +162,26 @@ document.addEventListener("DOMContentLoaded", () => {
       conversationState = "initial_test";
       currentQuestionIndex = 0;
       score = 0;
-      appendMessage("mole", "INICIANDO EVALUACIÓN...");
+      appendMessage("mole", "INICIANDO EVALUACIÓN DE SEGURIDAD...");
       setTimeout(() => displayQuestion(securityQuestions[0]), 1000);
-    } else if (conversationState === "dialogue") {
+    } else {
       appendMessage("user", text);
       userInput.value = "";
       callGemini(text);
     }
   }
 
-  // Listeners y Bienvenida
+  // EVENTOS
   sendButton.addEventListener("click", handleInput);
   userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") handleInput();
   });
 
+  // Bienvenida
   setTimeout(() => {
     appendMessage(
       "mole",
-      "ACCESO CONCEDIDO. Hola,soy MOLE AI, tu analista de seguridad. Pregunta lo que desees o escribe la palabra 'TEST' para recibir una evaluación de seguridad personal respondiendo 3 preguntas."
+      "ACCESO CONCEDIDO. Hola, soy MOLE AI u asistente de seguidad. Estoy listo para resolver tus dudas, tambien puedes escribir 'TEST' para recibir una auditoría de seguridad."
     );
   }, 500);
 });
