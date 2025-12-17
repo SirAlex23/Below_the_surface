@@ -1,28 +1,27 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
+  if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
+
   try {
+    const { prompt } = req.body;
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    // 1. FORMA CORRECTA DE LISTAR MODELOS
-    const modelClient = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-    // Accedemos a la lista a través del cliente principal
-    // Nota: Algunas versiones requieren usar una llamada fetch directa si el SDK falla
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models?key=${process.env.GEMINI_API_KEY}`
-    );
-    const data = await response.json();
-
-    // 2. IMPRIMIR EN LOGS (Esto es lo que necesitamos leer)
-    console.log("LISTA OFICIAL DE MODELOS:", JSON.stringify(data, null, 2));
-
-    return res.status(200).json({
-      mensaje: "Revisa los logs de Vercel ahora mismo",
-      data: data,
+    // USAMOS EL NOMBRE EXACTO DE TU LISTA: Gemini 2.5 Flash
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
     });
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      systemInstruction:
+        "Eres Mole AI, un experto en ciberseguridad, tecnología y soberanía digital, lo dominas todo sobre VPN,Dark web y Deep web, monedas virtuales,navegadores privados y seguridad personal. Responde de forma experta, concisa y sin usar formatos markdown como asteriscos o almohadillas.",
+    });
+
+    const response = await result.response;
+    return res.status(200).json({ response: response.text() });
   } catch (error) {
-    console.error("ERROR AL LISTAR:", error.message);
+    console.error("ERROR FINAL:", error.message);
     return res.status(500).json({ error: error.message });
   }
 }
