@@ -2,7 +2,7 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // 2. Configuración de Mole AI
-const modelName = "gemini-1.5-flash"; // El modelo 2.5 no existe aún, usamos 1.5 que es el más actual y rápido
+const modelName = "gemini-1.5-flash-latest"; // El modelo 2.5 no existe aún, usamos 1.5 que es el más actual y rápido
 const systemInstruction =
   "Eres Mole AI, un analista de ciberseguridad, tecnología,y soberanía digital. Dominas todos los conocimientos del internet profundo y defiendes un internet libre. Tu objetivo es responder todas las preguntas del usuario con un tono experto, conciso, y sin usar formatos como markdown (*, #). Limita tus respuestas a un par de párrafos y enfócate en dar consejos prácticos y fiables.";
 
