@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInput = document.getElementById("user-input");
   const sendButton = document.getElementById("send-button");
 
-  // --- VARIABLES DE ESTADO ---
   let conversationState = "dialogue";
   let currentQuestionIndex = 0;
   let score = 0;
@@ -11,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const securityQuestions = [
     {
       id: 1,
-      text: "PREGUNTA 01: ¿Utilizas un Gestor de Contraseñas (como Bitwarden, 1Password o Keepass) para generar y almacenar contraseñas únicas y complejas para cada servicio?",
+      text: "PREGUNTA 01: ¿Utilizas un Gestor de Contraseñas (como Bitwarden, 1Password o Keepass) para generar y almacenar contraseñas únicas?",
       options: [
         { text: "[A] Sí, siempre uso un gestor.", points: 3 },
         { text: "[B] Solo para cuentas muy importantes.", points: 1 },
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 2,
-      text: "PREGUNTA 02: ¿Tienes activada la Autenticación de Dos Factores (2FA) en la mayoría de tus cuentas importantes (email, banca, redes sociales)?",
+      text: "PREGUNTA 02: ¿Tienes activada la Autenticación de Dos Factores (2FA) en la mayoría de tus cuentas importantes?",
       options: [
         {
           text: "[A] Sí, uso apps de autenticación (Google/Authy).",
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 3,
-      text: "PREGUNTA 03: ¿Utilizas una VPN (Red Privada Virtual) cuando navegas por internet, especialmente en redes Wi-Fi públicas o para evitar el rastreo de tu IP?",
+      text: "PREGUNTA 03: ¿Utilizas una VPN cuando navegas por internet, especialmente en redes Wi-Fi públicas?",
       options: [
         { text: "[A] Sí, la uso casi siempre.", points: 3 },
         { text: "[B] Solo en redes públicas.", points: 1 },
@@ -41,43 +40,34 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  // --- FUNCIONES DE CHAT (UI) ---
-
   function appendMessage(sender, text) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add(
       sender === "mole" ? "mole-message" : "user-message"
     );
-
     if (sender === "user") {
       messageDiv.innerHTML = `<span style="color: var(--hacker-green);">> USUARIO >> ${text}</span>`;
     } else {
       messageDiv.innerHTML = `<span style="color: var(--system-color);">> MOLE >> ${text}</span>`;
     }
-
     chatWindow.appendChild(messageDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
     return messageDiv;
   }
 
-  // --- LÓGICA DEL TEST DE SEGURIDAD ---
-
   function displayQuestion(question) {
     const questionDiv = document.createElement("div");
     questionDiv.classList.add("mole-message");
     if (question.id > 1) questionDiv.style.marginTop = "30px";
-
     let html = `<span class="mole-question">${question.text}</span><br><ul class="options-list">`;
     question.options.forEach((option, index) => {
       const optionLetter = String.fromCharCode(65 + index);
       html += `<li data-points="${option.points}" data-letter="${optionLetter}">${option.text}</li>`;
     });
     html += "</ul>";
-
     questionDiv.innerHTML = html;
     chatWindow.appendChild(questionDiv);
     chatWindow.scrollTop = chatWindow.scrollHeight;
-
     questionDiv.querySelectorAll(".options-list li").forEach((li) => {
       li.addEventListener("click", handleAnswerClick);
     });
@@ -85,20 +75,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function handleAnswerClick(event) {
     if (conversationState !== "initial_test") return;
-    const selectedOption = event.currentTarget;
-    const points = parseInt(selectedOption.dataset.points);
-    const optionText = selectedOption.textContent;
-    const optionLetter = selectedOption.dataset.letter;
+    const li = event.currentTarget;
+    const points = parseInt(li.dataset.points);
+    const letter = li.dataset.letter;
+    const text = li.textContent.substring(4).trim();
 
-    selectedOption.parentElement.querySelectorAll("li").forEach((li) => {
-      li.removeEventListener("click", handleAnswerClick);
-      li.style.cursor = "default";
+    li.parentElement.querySelectorAll("li").forEach((el) => {
+      el.removeEventListener("click", handleAnswerClick);
+      el.style.cursor = "default";
     });
 
-    appendMessage(
-      "user",
-      `[${optionLetter}] ${optionText.substring(4).trim()}`
-    );
+    appendMessage("user", `[${letter}] ${text}`);
     score += points;
     currentQuestionIndex++;
 
@@ -107,54 +94,59 @@ document.addEventListener("DOMContentLoaded", () => {
         displayQuestion(securityQuestions[currentQuestionIndex]);
       }, 1000);
     } else {
-      setTimeout(endTestAndShowResults, 1500);
+      setTimeout(showResults, 1500);
     }
   }
 
-  function endTestAndShowResults() {
-    const maxScore = securityQuestions.length * 3;
-    const percentage = (score / maxScore) * 100;
-    let level =
-      percentage >= 80
-        ? "ALTO (Firewall Activo)"
-        : percentage >= 50
-        ? "MEDIO (Escudo Poroso)"
-        : "BAJO (Acceso Abierto)";
-    let advice =
-      percentage >= 80
-        ? "¡Excelente! Tu resistencia es alta."
-        : percentage >= 50
-        ? "Tienes bases sólidas, pero hay agujeros."
-        : "Tu exposición es crítica.";
+  function showResults() {
+    let level = "";
+    let advice = "";
+
+    if (score >= 7) {
+      level = "ALTO (Firewall Activo)";
+      advice =
+        "¡Excelente! Tu resistencia es alta. Mantente siempre al día con las nuevas amenazas y verifica dos veces la fuente de información crítica.";
+    } else if (score >= 4) {
+      level = "MEDIO (Escudo Poroso)";
+      advice =
+        "Tienes bases sólidas, pero hay agujeros. Te recomiendo encarecidamente revisar la implementación de tu Gestor de Contraseñas y asegurar el 2FA.";
+    } else {
+      level = "BAJO (Acceso Abierto)";
+      advice =
+        "Tu exposición es crítica. Necesitas implementar de inmediato un Gestor de Contraseñas y activar el 2FA para reforzar tu defensa digital.";
+    }
 
     appendMessage(
       "mole",
-      `ANÁLISIS COMPLETADO. Has obtenido ${score} de ${maxScore} puntos.`
+      `ANÁLISIS COMPLETADO. Has obtenido ${score} de 9 puntos.`
     );
+
     setTimeout(() => {
       appendMessage("mole", `Tu Nivel de Protección Digital es: ${level}.`);
     }, 1000);
+
     setTimeout(() => {
       appendMessage("mole", `CONSEJO DE MOLE: ${advice}`);
     }, 2000);
+
     setTimeout(() => {
       appendMessage(
         "mole",
-        "El test ha concluido. Estoy de vuelta en modo consulta."
+        "El test ha concluido. Estoy de vuelta en modo consulta. Escribe 'TEST' para repetir."
       );
       conversationState = "dialogue";
       userInput.disabled = false;
       sendButton.disabled = false;
       userInput.placeholder = "Escribe tu pregunta o 'TEST'...";
       userInput.focus();
-    }, 3000);
+    }, 4000);
   }
 
   function startTest() {
     conversationState = "initial_test";
     currentQuestionIndex = 0;
     score = 0;
-    appendMessage("mole", "INICIANDO EVALUACIÓN DE SEGURIDAD...");
+    appendMessage("mole", "INICIANDO EVALUACIÓN DE SEGURIDAD. Concéntrate.");
     userInput.disabled = true;
     sendButton.disabled = true;
     setTimeout(() => {
@@ -163,29 +155,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- SISTEMA DE REINTENTO Y CONEXIÓN API ---
-
   async function callGeminiBackend(query, retryCount = 0) {
-    const maxRetries = 2; // Intentará hasta 3 veces en total
+    const maxRetries = 2;
     let loadingDiv;
-
-    if (retryCount === 0) {
+    if (retryCount === 0)
       loadingDiv = appendMessage(
         "mole",
         "Analizando... Procesando en el servidor de IA."
       );
-    }
 
     try {
-      const response = await fetch("/.netlify/functions/gemini", {
+      const response = await fetch("/api/gemini", {
+        // Ajustado a Vercel
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: query }),
       });
 
-      if (!response.ok) throw new Error("Fallo en servidor");
       const data = await response.json();
 
-      // Limpiar mensaje de carga si existe
       const loaders = document.querySelectorAll(".mole-message");
       loaders.forEach((msg) => {
         if (msg.textContent.includes("Analizando...")) msg.remove();
@@ -197,10 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Respuesta vacía");
       }
     } catch (error) {
-      console.error(`Intento ${retryCount + 1} fallido:`, error);
-
       if (retryCount < maxRetries) {
-        console.log("Reiniciando petición...");
         return callGeminiBackend(query, retryCount + 1);
       } else {
         const loaders = document.querySelectorAll(".mole-message");
@@ -209,32 +194,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         appendMessage(
           "mole",
-          "ERROR CRÍTICO: No se pudo obtener respuesta tras varios intentos."
+          "ERROR CRÍTICO: El núcleo de IA no responde. Inténtalo de nuevo."
         );
       }
     }
   }
 
-  // --- ROUTER Y ENTRADA DEL USUARIO ---
-
   function handleUserInput() {
     const text = userInput.value.trim();
     if (text === "") return;
-
     appendMessage("user", text);
     userInput.value = "";
 
     if (conversationState === "initial_test") return;
 
-    if (text.toUpperCase() === "TEST" || text.toUpperCase() === "EVALUAR") {
+    if (text.toUpperCase() === "TEST") {
       startTest();
-    } else if (
-      text.toLowerCase().includes("gracias") ||
-      text.toLowerCase().includes("adios")
-    ) {
-      setTimeout(() => {
-        appendMessage("mole", "Misión cumplida. Fin del análisis.");
-      }, 1000);
     } else {
       callGeminiBackend(text);
     }
@@ -243,11 +218,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeMole() {
     userInput.disabled = false;
     sendButton.disabled = false;
-    userInput.focus();
     setTimeout(() => {
       appendMessage(
         "mole",
-        "ACCESO CONCEDIDO. Hola, soy MOLE AI tu asistente de seguidad. Estoy listo para resolver tus dudas, tambien puedes escribir 'TEST' para recibir una auditoría de seguridad."
+        "ACCESO CONCEDIDO. Hola, soy MOLE AI tu asistente de seguidad. Estoy listo para resolver tus dudas, tambien puedes escribir 'TEST' para recibir una auditoría de seguridad"
       );
     }, 500);
   }
@@ -256,6 +230,5 @@ document.addEventListener("DOMContentLoaded", () => {
   userInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") handleUserInput();
   });
-
   initializeMole();
 });
