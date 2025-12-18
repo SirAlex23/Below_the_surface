@@ -152,3 +152,39 @@ body {
 .user-message {
   margin-bottom: 25px;
 }
+
+/* Espaciado general entre mensajes del chat */
+.mensaje-mole,
+.mensaje-usuario {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Color Azul para mensajes de sistema (Iniciando comunicación, etc.) */
+.mensaje-sistema {
+  color: #00d4ff;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+/* Colores de los Nombres (Prefijos) */
+.prefijo-nombre {
+  color: var(--hacker-green);
+  font-weight: bold;
+}
+
+/* Colores del Contenido (Lo que dicen) */
+.texto-contenido {
+  color: #00ff41;
+}
+
+/* Separación extra en el TEST */
+.mole-question-container {
+  margin-top: 35px;
+  border-top: 1px solid #00ff4133;
+  padding-top: 15px;
+}
+
+.options-list li {
+  margin: 12px 0;
+}
